@@ -1,2 +1,2 @@
-7790360720115,swift,picadillo de carne,24,45,11-04-2020
-1234,coca cola,2.25l,100,120,22-22-22
+7790360720115,swift,picadillo de carne,24,2020-04-12
+7790895000430,coca cola,1.5 ltros,43,70,2020-04-12

@@ -34,3 +34,8 @@ def eliminar(producto):
     with open(ARCHIVO,'w') as f:
         for k in basedatos:
             f.write( ','.join( basedatos[k] ) +'\n' )
+
+def estaProducto(codigoBarras):
+    basedatos = leer()
+
+    return (True, basedatos[codigoBarras]) if codigoBarras in basedatos else (False,[])
