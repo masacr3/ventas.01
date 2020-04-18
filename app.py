@@ -8,6 +8,10 @@ app = Flask(__name__)
 def index():
     return render_template('cargadatos.html')
 
+@app.route('/test')
+def test():
+    return render_template('test.html')
+
 @app.route('/verificar', methods = ['POST'])
 def verificar():
     cod = request.form['cod']
@@ -20,6 +24,11 @@ def verificar():
     }
 
     return jsonify(d)
+
+
+@app.route('/actualizardatos')
+def actualizardatos():
+    return render_template('actualizardatos.html')
 
 @app.route('/cargadatos', methods = ['POST'])
 def cargadatos():
