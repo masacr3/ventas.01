@@ -18,7 +18,7 @@
                       <label for="cod-barras">Codigo Barras</label>
                       <input type="text" class="form-control" id="cod-barras" name="cod" autocomplete="off">
                       <div class="alert alert-danger" role="alert" id="esta-producto">
-                        El producto ya se encuentra en su base de datos.
+                        El producto no se encuentra en su base de datos.
                       </div>
                     </div>
                     <div class="form-group">
@@ -55,9 +55,7 @@
 </body>
 <script>
     $(document).ready(function(){
-
-        var cont = 0
-
+        
         //flash oculto
         $('#esta-producto').hide()
         $('#operacion-ok').hide()
@@ -116,7 +114,7 @@
                 $('#submit').focus()
           }
         })
-
+        
         function verificaCodigoBarras() { 
             var valor = $("#cod-barras").val();
             $.ajax({
@@ -124,34 +122,41 @@
                 url:  '/verificar',
                 data: 'cod='+valor,
                 success: function(response){
-                    if (response.rta){
+                    if (!response.rta){
                         $('#esta-producto').fadeTo(2000, 500).slideUp(500, function(){
                             $('#esta-producto').slideUp(1000)
                         })
                         $('#cod-barras').val('')
                     }
                     else{
+                        $('#cod-barras').val(response.referencia[0])
+                        $('#marca').val(response.referencia[1])
+                        $('#descripcion').val(response.referencia[2])
+                        $('#valormayorista').val(response.referencia[3])
+                        $('#valornegocio').val(response.referencia[4])
+
                         $('#marca').focus()
                     }
                 }
             })
         }
 
-    function cargarEnLaBaseDatos() { 
-        $.ajax({
-            type: 'POST', 
-            url:  '/cargadatos',
-            data: $('#form').serialize(),
-            success: function(response){
-                $('#operacion-ok').fadeTo(2000, 500).slideUp(500, function(){
-                    $('#operacion-ok').slideUp(1000)
-                })
-                $('#cod-barras').val('')
-                $('.no-submit').val('')
-                $('#cod-barras').focus()
-            }
-        });
-    }
-})
+        function cargarEnLaBaseDatos() { 
+            $.ajax({
+                type: 'POST', 
+                url:  '/cargadatos',
+                data: $('#form').serialize(),
+                success: function(response){
+                    $('#operacion-ok').fadeTo(2000, 500).slideUp(500, function(){
+                        $('#operacion-ok').slideUp(1000)
+                    })
+                    $('#cod-barras').val('')
+                    $('.no-submit').val('')
+                    $('#cod-barras').focus()
+                }
+            })
+        }
+
+        
+    })
 </script>
-</html>
