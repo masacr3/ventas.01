@@ -1,0 +1,142 @@
+.topper{
+    position: relative;
+    height: 55px;
+}
+
+.box-articulo{
+    position: relative;
+    width: 805px;
+    height: 105px;
+    border-bottom: 1px solid darkcyan;
+    background-color: white;
+}
+
+.c1, .c2, .c3{
+    position: relative;
+    float: left;
+}
+
+.c1{
+    width: 400px;
+    height: 100px;
+    background-color: white;
+}
+
+.c2{
+    width: 200px;
+    height: 100px;
+    background-color:white;
+}
+
+.c3{
+    width: 200px;
+    height: 100px;
+    background-color: white;
+}
+
+p{
+    font-family: sans-serif;
+    color: black;
+}
+
+
+.box-c1{
+    position: relative;
+    width: 400px;
+    height: 50px;
+}
+
+.box-c2, .box-c3{
+    position: relative;
+    width: 200px;
+    height: 50px;
+}
+
+
+.box-marca{
+    position: relative;
+    width: 400px;
+    height: 50px;
+    background-color: white;
+    float: left;
+}
+
+.box-cantidad{
+    position: relative;
+    width: 100px;
+    height: 50px;
+    background-color: white;
+    float: left;
+}
+
+.box-descripcion{
+    position: relative;
+    width: 400px;
+    height: 50px;
+    background-color: white;
+}
+
+.p-marca{
+    text-align: center;
+    font-size: xx-large;
+}
+
+.p-descripcion{
+    text-align: center;
+    font-size: medium;
+}
+
+.p-precionegocio, .p-subtotal, .p-cantidad{
+    text-align: center;
+    font-size: xx-large;
+}
+
+.p-subtitulo{
+    text-align: center;
+}
+
+.footer{
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    top: 0px;
+    background-color: crimson;
+}
+
+.p-total{
+    color: white;
+    font-size: xx-large;
+    text-align: center;
+}
+
+.foo-input{
+    position: relative;
+    width: 50%;
+    height: 50px;
+    float: left;
+}
+
+.foo-total{
+    position: relative;
+    width: 50%;
+    height: 50px;
+    float: left;
+}
+
+.cod-barras{
+    position: relative;
+    float: right;
+    right: 200px;
+    top: 7px;
+}
+
+#esta-producto{
+    position: fixed;
+    width: 100%;
+    top:50px;
+}
+
+.p-flash{
+    padding-top: 10px;
+    text-align: center;
+}
