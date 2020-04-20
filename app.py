@@ -8,9 +8,9 @@ app = Flask(__name__)
 def index():
     return render_template('cargadatos.html')
 
-@app.route('/test')
+@app.route('/ventas')
 def test():
-    return render_template('test.html')
+    return render_template('ventas.html')
 
 @app.route('/verificar', methods = ['POST'])
 def verificar():
