@@ -5,13 +5,13 @@
 
 .box-articulo{
     position: relative;
-    width: 805px;
+    width: 905px;
     height: 105px;
     border-bottom: 1px solid darkcyan;
     background-color: white;
 }
 
-.c1, .c2, .c3{
+.c1, .c2, .c3, .c4{
     position: relative;
     float: left;
 }
@@ -32,6 +32,11 @@
     width: 200px;
     height: 100px;
     background-color: white;
+}
+
+.c4{
+    width: 100px;
+    height: 100px;
 }
 
 p{
@@ -74,6 +79,32 @@ p{
     width: 400px;
     height: 50px;
     background-color: white;
+}
+
+.box-c4{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    padding-top: 5px;
+}
+
+.box-c4t, .box-c4m, .box-c4b{
+    position: relative;
+    width: 100px;
+    height: 30px;
+    color: white;
+}
+
+.p-sumar, .p-restar, .p-eliminar{
+    text-align: center;
+    font-size: larger;
+    font-family: sans-serif;
+    background-color: tomato;
+    color: whitesmoke;
+}
+
+.p-sumar:hover, .p-restar:hover, .p-eliminar:hover{
+    background-color: teal;
 }
 
 .p-marca{
