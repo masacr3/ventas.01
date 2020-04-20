@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="static/style.css">
+    <title>Ventas</title>
+</head>
+<body>
+    
+    <div class="container">
+
+        <div class="col"></div>
+        <div class="col-8 carrito">
+            <div class="topper"></div>
+        </div>
+        <div class="col"></div>
+
+    </div>
+
+    <div class="footer">
+        <div class="foo-input">
+            <input type="text" class="cod-barras">
+        </div>
+        <div class="foo-total">
+            <p class="p-total total">$0</p>    
+        </div>
+    </div>
+
+    <div class="alert alert-warning" role="alert" id="esta-producto">
+        <p class="p-flash">El producto no se encuentra en su base de datos.</p>
+      </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+<script>
+    $(document).ready(function(){
+        var total = 0
+        $('#esta-producto').hide()
+
+        var carrito = []
+
+        $(".cod-barras").keypress(function(e) {
+            //no recuerdo la fuente pero lo recomiendan para
+            //mayor compatibilidad entre navegadores.
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if(code==13){
+                estaEnElCarrito( $(this).val() ) 
+            }
+        })
+
+        //funciones
+        function estaEnElCarrito(codigoBarra){
+            if ( carrito.indexOf(codigoBarra) > -1 ){
+                actualizoCarrito(codigoBarra)
+            }
+            else{
+                verificaCodigoBarras()
+            }
+
+        }
+
+        function actualizoCarrito(codigoBarra){
+            var selectorCantidad = '.a'+ codigoBarra + ' .cantidad'
+            var selectorPrecio = '.a'+ codigoBarra + ' .precio'
+            var selectorSubtotal = '.a'+ codigoBarra + ' .subtotal'
+                
+                
+            //+1 cantidad
+            var nuevacantidad = parseInt($(selectorCantidad).text()) + 1
+            $(selectorCantidad).text(nuevacantidad)
+
+            var precio = parseFloat($(selectorPrecio).text().split('$')[1])
+            var subtotal = parseFloat($(selectorSubtotal).text().split('$')[1])
+            var nuevosubtotal = precio + subtotal
+
+            //+precio subtotal
+            $(selectorSubtotal).text('$'+nuevosubtotal)
+                
+            total += precio 
+            //actualizo el total general
+            $('.total').text('$'+total)
+            $('.cod-barras').val('')
+            $('.cod-barras').focus()
+        }
+
+        function restarAlCarrito(codigoBarra){
+            var selectorCantidad = '.a'+ codigoBarra + ' .cantidad'
+            var selectorPrecio = '.a'+ codigoBarra + ' .precio'
+            var selectorSubtotal = '.a'+ codigoBarra + ' .subtotal'
+                
+                
+            //+1 cantidad
+            var nuevacantidad = parseInt($(selectorCantidad).text()) - 1
+            $(selectorCantidad).text(nuevacantidad)
+
+            var precio = parseFloat($(selectorPrecio).text().split('$')[1])
+            var subtotal = parseFloat($(selectorSubtotal).text().split('$')[1])
+            var nuevosubtotal = subtotal - precio
+
+            //+precio subtotal
+            $(selectorSubtotal).text('$'+nuevosubtotal)
+                
+            total -= precio 
+            //actualizo el total general
+            $('.total').text('$'+total)
+            
+            if (nuevacantidad < 1){
+                
+                var pos = carrito.indexOf(codigoBarra)
+                carrito.splice(pos,1)
+                $('.a'+codigoBarra).remove()
+            }
+        }
+
+        function verificaCodigoBarras() { 
+            var valor = $(".cod-barras").val();
+            $.ajax({
+                type: 'POST', 
+                url:  '/verificar',
+                data: 'cod='+valor,
+                success: function(response){
+                    if (!response.rta){
+                        $('#esta-producto').fadeTo(2000, 500).slideUp(500, function(){
+                            $('#esta-producto').slideUp(1000)
+                        })
+                        $('.cod-barras').val('')
+
+                    }
+                    else{
+                        var mitemplate = `
+                        <div class="box-articulo">
+                            <div class="c1">
+                                <div class="box-c1">
+                                    <div class="box-marca"><p class="p-marca">${ response.referencia[1] } <span class="badge badge-warning cantidad">1</span></p></div>
+                                </div>
+                                <div class="box-descripcion"><p class="p-descripcion">${ response.referencia[2]}</p></div>
+                            </div>
+                            <div class="c2">
+                                <div class="box-c2"><p class="p-precionegocio precio">$${ response.referencia[4]}</p></div>
+                                <div class="box-subtitulo"><p class="p-subtitulo text-muted">Precio negocio</p></div>
+                            </div>
+                            <div class="c3">
+                                <div class="box-c3"><p class="p-subtotal subtotal">$${ response.referencia[4]}</p></div>
+                                <div class="box-subtitulo"><p class="p-subtitulo text-muted">Subtotal</p></div>
+                             </div>
+                            <div class="c4">
+                                <div class="box-c4">
+                                    <div class="box-c4t"><p class="p-sumar">+</p></div>
+                                    <div class="box-c4m"><p class="p-restar">-</p></div>
+                                    <div class="box-c4b"><p class="p-eliminar">Eliminar</p></div>
+                                </div>
+                            </div>
+                        </div>`
+
+                        const col = document.querySelector('.carrito')
+
+                        const nodo = document.createElement('div')
+
+                        nodo.className = 'a'+ response.referencia[0]
+
+                        col.append(nodo)
+
+                        nodo.innerHTML = mitemplate
+
+                        carrito.push( response.referencia[0])
+
+                        var precio = parseFloat( response.referencia[4])
+
+                        total += precio 
+                        //actualizo el total general
+                        $('.total').text('$'+total)
+                        $('.cod-barras').val('')
+                        $('.cod-barras').focus()
+
+                        $('.carrito').on('click','.box-c4b' ,function(e){
+                            
+                            //resuelvo el doble click al eliminar 
+                            e.stopImmediatePropagation()
+                            
+                            var articulo =  $(this).closest('.box-articulo').parent().attr('class')
+
+                            var codb = articulo.split('a')[1]
+
+                            var selectorSubtotal = '.' + articulo + ' .subtotal'
+                            var subtotal = parseFloat( $(selectorSubtotal).text().split('$')[1] )
+
+                            total -= subtotal
+                            $('.total').text('$'+total)
+
+                            var pos = carrito.indexOf(codb)
+                            carrito.splice(pos,1)
+
+                            $( '.'+articulo ).remove()                           
+                            
+                        })
+
+                        $('.carrito').on('click','.box-c4t' ,function(e){
+                            
+                            //resuelvo el doble click al eliminar 
+                            e.stopImmediatePropagation()
+                            
+                            var articulo =  $(this).closest('.box-articulo').parent().attr('class')
+
+                            var codb = articulo.split('a')[1]
+
+                            actualizoCarrito(codb)
+                        })
+
+                        $('.carrito').on('click','.box-c4m' ,function(e){
+                            
+                            //resuelvo el doble click al eliminar 
+                            e.stopImmediatePropagation()
+                            
+                            var articulo =  $(this).closest('.box-articulo').parent().attr('class')
+
+                            var codb = articulo.split('a')[1]
+
+                            restarAlCarrito(codb)
+                        })
+                    }
+                }
+            })
+        }
+
+    })
+</script>
+</html>
