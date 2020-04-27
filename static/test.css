@@ -1,0 +1,79 @@
+.medio{
+    width: 1100px;
+    margin: 20px auto;
+
+}
+
+.box{
+    width: 1000px;
+    height: 55px;
+    background-color: #7986CB;
+}
+
+.box:hover{
+    background-color: #7986CB;
+    color: #fff;
+}
+
+.cc{
+    height: 25px;
+    margin: 15px;
+}
+
+
+.box-marca{
+    position: relative;
+    width: 200px;
+    float: left;
+}
+
+.box-descripcion{
+    position: relative;
+    width: 300px;
+    float: left;
+}
+
+.box-cantidad{
+    position: relative;
+    width: 70px;
+    float: left;
+}
+
+.sin-borde{
+    width: 70px;
+    font-family: sans-serif;
+    font-size: medium;
+    text-align: center;
+    outline: none;
+    border: 0px;
+    background-color: #7986CB;
+}
+
+
+.box-precio, .box-subtotal{
+    position: relative;
+    width: 100px;
+    float: left;
+}
+
+.box-borrar{
+    position: relative;
+    width: 25px;
+    float: right;
+    transition: all 0.10s ease-out;
+}
+
+p{
+    padding-top: 2px;
+    font-family: sans-serif;
+    font-size: medium;
+    margin: 0px;
+}
+
+.pc{
+    text-align: center;
+}
+
+.box-borrar:hover{
+    transform: rotate(23deg);
+}
