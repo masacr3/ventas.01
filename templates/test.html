@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='test.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="medio">
+        <div class="box">
+            <div class="box-marca cc"><p>Coca cola</p></div>
+            <div class="box-descripcion cc pc"><p>2.25 litros</p></div>
+            <div class="box-cantidad cc pc"><p>
+                <input type="text" class="sin-borde" value="2">
+            </p></div>
+            <div class="box-precio cc pc"><p class="precio">$140</p></div>
+            <div class="box-subtotal cc pc "><p class="subtotal">$280</p></div>
+            <div class="box-borrar cc"><img src="{{ url_for('static',filename='img/borrar.png') }}" alt=""></div>
+        </div>
+
+        <div class="box">
+            <div class="box-marca cc"><p>Coca cola</p></div>
+            <div class="box-descripcion cc pc"><p>2.25 litros</p></div>
+            <div class="box-cantidad cc pc"><p>
+                <input type="text" class="sin-borde" value="2">
+            </p></div>
+            <div class="box-precio cc pc"><p class="precio">$140</p></div>
+            <div class="box-subtotal cc pc "><p class="subtotal">$280</p></div>
+            <div class="box-borrar cc"><img src="{{ url_for('static',filename='img/borrar.png') }}" alt=""></div>
+        </div>
+    </div>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
+<script>
+    $(document).ready(function(){
+
+        $('.box').click(function(){
+            $('.sin-borde').focus()
+            $('.sin-borde').select()
+        })
+
+        $('.sin-borde').keypress(function(e){
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if(code==13){
+                var cant = parseInt($(this).val())
+                console.log(cant, 'cantidad')
+
+                var precio = parseFloat($('.precio').text().split('$')[1])
+                console.log(precio,'precio')
+
+                var nuevosub = cant  * precio
+                console.log(nuevosub,'nuevosub')
+
+                $('.subtotal').text('$'+nuevosub)
+
+                $(this).blur()
+            }
+        })
+    })
+</script>
+</html>
